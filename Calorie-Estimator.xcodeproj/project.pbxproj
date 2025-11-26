@@ -1,0 +1,567 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		A216BBB02ED6CAF300701F2F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A216BB972ED6CAF000701F2F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A216BB9E2ED6CAF000701F2F;
+			remoteInfo = "Calorie-Estimator";
+		};
+		A216BBBA2ED6CAF300701F2F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A216BB972ED6CAF000701F2F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A216BB9E2ED6CAF000701F2F;
+			remoteInfo = "Calorie-Estimator";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A216BB9F2ED6CAF000701F2F /* Calorie-Estimator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calorie-Estimator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A216BBAF2ED6CAF300701F2F /* Calorie-EstimatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Calorie-EstimatorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A216BBB92ED6CAF300701F2F /* Calorie-EstimatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Calorie-EstimatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A216BBA12ED6CAF000701F2F /* Calorie-Estimator */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Calorie-Estimator";
+			sourceTree = "<group>";
+		};
+		A216BBB22ED6CAF300701F2F /* Calorie-EstimatorTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Calorie-EstimatorTests";
+			sourceTree = "<group>";
+		};
+		A216BBBC2ED6CAF300701F2F /* Calorie-EstimatorUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Calorie-EstimatorUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A216BB9C2ED6CAF000701F2F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A216BBAC2ED6CAF300701F2F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A216BBB62ED6CAF300701F2F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A216BB962ED6CAF000701F2F = {
+			isa = PBXGroup;
+			children = (
+				A216BBA12ED6CAF000701F2F /* Calorie-Estimator */,
+				A216BBB22ED6CAF300701F2F /* Calorie-EstimatorTests */,
+				A216BBBC2ED6CAF300701F2F /* Calorie-EstimatorUITests */,
+				A216BBA02ED6CAF000701F2F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A216BBA02ED6CAF000701F2F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A216BB9F2ED6CAF000701F2F /* Calorie-Estimator.app */,
+				A216BBAF2ED6CAF300701F2F /* Calorie-EstimatorTests.xctest */,
+				A216BBB92ED6CAF300701F2F /* Calorie-EstimatorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A216BB9E2ED6CAF000701F2F /* Calorie-Estimator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A216BBC32ED6CAF300701F2F /* Build configuration list for PBXNativeTarget "Calorie-Estimator" */;
+			buildPhases = (
+				A216BB9B2ED6CAF000701F2F /* Sources */,
+				A216BB9C2ED6CAF000701F2F /* Frameworks */,
+				A216BB9D2ED6CAF000701F2F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A216BBA12ED6CAF000701F2F /* Calorie-Estimator */,
+			);
+			name = "Calorie-Estimator";
+			packageProductDependencies = (
+			);
+			productName = "Calorie-Estimator";
+			productReference = A216BB9F2ED6CAF000701F2F /* Calorie-Estimator.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A216BBAE2ED6CAF300701F2F /* Calorie-EstimatorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A216BBC62ED6CAF300701F2F /* Build configuration list for PBXNativeTarget "Calorie-EstimatorTests" */;
+			buildPhases = (
+				A216BBAB2ED6CAF300701F2F /* Sources */,
+				A216BBAC2ED6CAF300701F2F /* Frameworks */,
+				A216BBAD2ED6CAF300701F2F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A216BBB12ED6CAF300701F2F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A216BBB22ED6CAF300701F2F /* Calorie-EstimatorTests */,
+			);
+			name = "Calorie-EstimatorTests";
+			packageProductDependencies = (
+			);
+			productName = "Calorie-EstimatorTests";
+			productReference = A216BBAF2ED6CAF300701F2F /* Calorie-EstimatorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A216BBB82ED6CAF300701F2F /* Calorie-EstimatorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A216BBC92ED6CAF300701F2F /* Build configuration list for PBXNativeTarget "Calorie-EstimatorUITests" */;
+			buildPhases = (
+				A216BBB52ED6CAF300701F2F /* Sources */,
+				A216BBB62ED6CAF300701F2F /* Frameworks */,
+				A216BBB72ED6CAF300701F2F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A216BBBB2ED6CAF300701F2F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A216BBBC2ED6CAF300701F2F /* Calorie-EstimatorUITests */,
+			);
+			name = "Calorie-EstimatorUITests";
+			packageProductDependencies = (
+			);
+			productName = "Calorie-EstimatorUITests";
+			productReference = A216BBB92ED6CAF300701F2F /* Calorie-EstimatorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A216BB972ED6CAF000701F2F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					A216BB9E2ED6CAF000701F2F = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					A216BBAE2ED6CAF300701F2F = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = A216BB9E2ED6CAF000701F2F;
+					};
+					A216BBB82ED6CAF300701F2F = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = A216BB9E2ED6CAF000701F2F;
+					};
+				};
+			};
+			buildConfigurationList = A216BB9A2ED6CAF000701F2F /* Build configuration list for PBXProject "Calorie-Estimator" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A216BB962ED6CAF000701F2F;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A216BBA02ED6CAF000701F2F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A216BB9E2ED6CAF000701F2F /* Calorie-Estimator */,
+				A216BBAE2ED6CAF300701F2F /* Calorie-EstimatorTests */,
+				A216BBB82ED6CAF300701F2F /* Calorie-EstimatorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A216BB9D2ED6CAF000701F2F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A216BBAD2ED6CAF300701F2F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A216BBB72ED6CAF300701F2F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A216BB9B2ED6CAF000701F2F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A216BBAB2ED6CAF300701F2F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A216BBB52ED6CAF300701F2F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A216BBB12ED6CAF300701F2F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A216BB9E2ED6CAF000701F2F /* Calorie-Estimator */;
+			targetProxy = A216BBB02ED6CAF300701F2F /* PBXContainerItemProxy */;
+		};
+		A216BBBB2ED6CAF300701F2F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A216BB9E2ED6CAF000701F2F /* Calorie-Estimator */;
+			targetProxy = A216BBBA2ED6CAF300701F2F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A216BBC12ED6CAF300701F2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A216BBC22ED6CAF300701F2F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A216BBC42ED6CAF300701F2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Calorie-Estimator/Preview Content\"";
+				DEVELOPMENT_TEAM = 997LCZS243;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to capture food images and depth data";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need the Photo Library to depth estimate food";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Need to add new potos for depth estimation";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "CMSC472.Calorie-Estimator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A216BBC52ED6CAF300701F2F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Calorie-Estimator/Preview Content\"";
+				DEVELOPMENT_TEAM = 997LCZS243;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to capture food images and depth data";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need the Photo Library to depth estimate food";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Need to add new potos for depth estimation";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "CMSC472.Calorie-Estimator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A216BBC72ED6CAF300701F2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "CMSC472.Calorie-EstimatorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calorie-Estimator.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Calorie-Estimator";
+			};
+			name = Debug;
+		};
+		A216BBC82ED6CAF300701F2F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "CMSC472.Calorie-EstimatorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calorie-Estimator.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Calorie-Estimator";
+			};
+			name = Release;
+		};
+		A216BBCA2ED6CAF300701F2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "CMSC472.Calorie-EstimatorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Calorie-Estimator";
+			};
+			name = Debug;
+		};
+		A216BBCB2ED6CAF300701F2F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "CMSC472.Calorie-EstimatorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Calorie-Estimator";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A216BB9A2ED6CAF000701F2F /* Build configuration list for PBXProject "Calorie-Estimator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A216BBC12ED6CAF300701F2F /* Debug */,
+				A216BBC22ED6CAF300701F2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A216BBC32ED6CAF300701F2F /* Build configuration list for PBXNativeTarget "Calorie-Estimator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A216BBC42ED6CAF300701F2F /* Debug */,
+				A216BBC52ED6CAF300701F2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A216BBC62ED6CAF300701F2F /* Build configuration list for PBXNativeTarget "Calorie-EstimatorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A216BBC72ED6CAF300701F2F /* Debug */,
+				A216BBC82ED6CAF300701F2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A216BBC92ED6CAF300701F2F /* Build configuration list for PBXNativeTarget "Calorie-EstimatorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A216BBCA2ED6CAF300701F2F /* Debug */,
+				A216BBCB2ED6CAF300701F2F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A216BB972ED6CAF000701F2F /* Project object */;
+}
