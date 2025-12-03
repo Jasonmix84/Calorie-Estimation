@@ -148,21 +148,33 @@ extension CameraManager: AVCapturePhotoCaptureDelegate {
         }
         
         PHPhotoLibrary.requestAuthorization { status in
-            guard status == .authorized else {
+            guard status == .authorized || status == .limited else {
                 DispatchQueue.main.async {
                     self.statusMessage = "Photos access denied"
                 }
                 return
             }
             
-            // Save RGB image
-            if let rgbImage = UIImage(data: photoData) {
-                UIImageWriteToSavedPhotosAlbum(rgbImage, nil, nil, nil)
+            // Build RGB UIImage
+            guard let rgbImage = UIImage(data: photoData) else {
+                DispatchQueue.main.async {
+                    self.statusMessage = "Failed to decode RGB image"
+                }
+                return
             }
             
-            // Convert and save depth map
-            let depthMap = depthData.depthDataMap
-            if let depthImage = self.depthMapToGrayscaleImage(depthMap: depthMap) {
+            // Save RGB image
+            UIImageWriteToSavedPhotosAlbum(rgbImage, nil, nil, nil)
+            
+            // Convert depth to float32
+            let floatDepthData = depthData.converting(toDepthDataType: kCVPixelFormatType_DepthFloat32)
+            let depthMap = floatDepthData.depthDataMap
+            
+            // 👇 Pass orientation from the RGB image
+            if let depthImage = self.depthMapToGrayscaleImage(
+                depthMap: depthMap,
+                orientation: rgbImage.imageOrientation
+            ) {
                 UIImageWriteToSavedPhotosAlbum(depthImage, nil, nil, nil)
             }
             
@@ -174,23 +186,81 @@ extension CameraManager: AVCapturePhotoCaptureDelegate {
             }
         }
     }
+
     
-    func depthMapToGrayscaleImage(depthMap: CVPixelBuffer) -> UIImage? {
-        let ciImage = CIImage(cvPixelBuffer: depthMap)
-        let context = CIContext()
+    func depthMapToGrayscaleImage(
+        depthMap: CVPixelBuffer,
+        orientation: UIImage.Orientation
+    ) -> UIImage? {
+        CVPixelBufferLockBaseAddress(depthMap, .readOnly)
+        defer { CVPixelBufferUnlockBaseAddress(depthMap, .readOnly) }
         
-        // Normalize depth values to 0-1 range
-        let filter = CIFilter(name: "CIColorControls")
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(1.0, forKey: kCIInputContrastKey)
+        let width = CVPixelBufferGetWidth(depthMap)
+        let height = CVPixelBufferGetHeight(depthMap)
+        let count = width * height
         
-        guard let outputImage = filter?.outputImage,
-              let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+        guard let baseAddress = CVPixelBufferGetBaseAddress(depthMap) else {
             return nil
         }
         
-        return UIImage(cgImage: cgImage)
+        // DepthFloat32 buffer
+        let floatBuffer = baseAddress.assumingMemoryBound(to: Float32.self)
+        
+        // 1. Find min/max depth
+        var minDepth = Float.greatestFiniteMagnitude
+        var maxDepth: Float = 0
+        
+        for i in 0..<count {
+            let d = floatBuffer[i]
+            if d.isFinite && d > 0 {
+                if d < minDepth { minDepth = d }
+                if d > maxDepth { maxDepth = d }
+            }
+        }
+        
+        let range = maxDepth - minDepth
+        guard range > 0, range.isFinite else {
+            return nil
+        }
+        
+        // 2. Normalize to 0–255 grayscale
+        let outData = UnsafeMutablePointer<UInt8>.allocate(capacity: count)
+        
+        for i in 0..<count {
+            let d = floatBuffer[i]
+            let normalized = (d - minDepth) / range
+            let clamped = max(0, min(1, normalized))
+            outData[i] = UInt8(clamped * 255)
+        }
+        
+        // 3. Create CGImage from grayscale buffer
+        let colorSpace = CGColorSpaceCreateDeviceGray()
+        let bytesPerRow = width * MemoryLayout<UInt8>.size
+        
+        guard let context = CGContext(
+            data: outData,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: bytesPerRow,
+            space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.none.rawValue
+        ) else {
+            outData.deallocate()
+            return nil
+        }
+        
+        guard let cgImage = context.makeImage() else {
+            outData.deallocate()
+            return nil
+        }
+        
+        outData.deallocate()
+        
+        // 👇 Apply **same orientation as RGB**
+        return UIImage(cgImage: cgImage, scale: 1.0, orientation: orientation)
     }
+
 }
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
