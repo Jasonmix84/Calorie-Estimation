@@ -137,6 +137,11 @@ struct ResultsView: View {
     let rgbImage: UIImage?
     let onClose: () -> Void
    
+    // Calculate total calories
+    var totalCalories: Double {
+        apiManager.detections.compactMap { $0.caloriesKcal }.reduce(0, +)
+    }
+   
     var body: some View {
         NavigationView {
             ScrollView {
@@ -147,6 +152,12 @@ struct ResultsView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(maxHeight: 300)
+                            .cornerRadius(12)
+                    }
+                   
+                    // Total calories card
+                    if totalCalories > 0 {
+                        TotalCaloriesCard(totalCalories: totalCalories)
                     }
                    
                     // Detections list
@@ -169,6 +180,42 @@ struct ResultsView: View {
     }
 }
 
+struct TotalCaloriesCard: View {
+    let totalCalories: Double
+   
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "flame.fill")
+                    .font(.system(size: 32))
+                    .foregroundColor(.orange)
+               
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Total Calories")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                   
+                    Text(String(format: "%.0f kcal", totalCalories))
+                        .font(.system(size: 36, weight: .bold))
+                        .foregroundColor(.primary)
+                }
+               
+                Spacer()
+            }
+            .padding()
+        }
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color.orange.opacity(0.1), Color.red.opacity(0.1)]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .cornerRadius(16)
+        .shadow(color: Color.black.opacity(0.1), radius: 8)
+    }
+}
+
 struct DetectionCard: View {
     let detection: FoodDetection
     let index: Int
@@ -177,7 +224,7 @@ struct DetectionCard: View {
         VStack(alignment: .leading, spacing: 12) {
             // Header
             HStack {
-                Text("\(index + 1). \(detection.name)")
+                Text("\(index + 1). \(detection.name.capitalized)")
                     .font(.headline)
                
                 Spacer()
@@ -194,28 +241,80 @@ struct DetectionCard: View {
                 .frame(height: 150)
                 .cornerRadius(8)
            
-            // Volume estimation
-            if let volume = detection.estimatedVolume {
-                HStack {
-                    Image(systemName: "cube.fill")
-                        .foregroundColor(.blue)
-                    Text("Estimated Volume:")
-                        .font(.subheadline)
-                    Spacer()
-                    Text(String(format: "%.1f cm³", volume))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
+            // Nutrition info
+            VStack(spacing: 8) {
+                // Volume
+                if let volume = detection.estimatedVolume {
+                    InfoRow(
+                        icon: "cube.fill",
+                        label: "Volume",
+                        value: String(format: "%.1f cm³", volume),
+                        color: .blue
+                    )
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                .background(Color.blue.opacity(0.1))
-                .cornerRadius(8)
+               
+                // Mass
+                if let mass = detection.massGrams {
+                    InfoRow(
+                        icon: "scalemass.fill",
+                        label: "Mass",
+                        value: String(format: "%.1f g", mass),
+                        color: .green
+                    )
+                }
+               
+                // Calories
+                if let calories = detection.caloriesKcal {
+                    InfoRow(
+                        icon: "flame.fill",
+                        label: "Calories",
+                        value: String(format: "%.0f kcal", calories),
+                        color: .orange
+                    )
+                } else if let error = detection.nutritionError {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundColor(.yellow)
+                        Text(error)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    .background(Color.yellow.opacity(0.1))
+                    .cornerRadius(8)
+                }
             }
         }
         .padding()
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.1), radius: 5)
+    }
+}
+
+struct InfoRow: View {
+    let icon: String
+    let label: String
+    let value: String
+    let color: Color
+   
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(color)
+                .frame(width: 24)
+            Text("\(label):")
+                .font(.subheadline)
+            Spacer()
+            Text(value)
+                .font(.subheadline)
+                .fontWeight(.semibold)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .background(color.opacity(0.1))
+        .cornerRadius(8)
     }
 }
 

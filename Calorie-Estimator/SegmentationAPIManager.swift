@@ -17,6 +17,29 @@ struct SegmentationResponse: Codable {
     }
 }
 
+// MARK: - Calorie Calculation Models
+struct CalorieRequestItem: Codable {
+    let food_name: String
+    let volume_cm3: Double
+}
+
+struct CalorieRequest: Codable {
+    let items: [CalorieRequestItem]
+}
+
+struct CalorieResponseItem: Codable {
+    let food_name: String
+    let volume_cm3: Double
+    let mass_g: Double?
+    let calories_kcal: Double?
+    let error: String?
+}
+
+struct CalorieResponse: Codable {
+    let items: [CalorieResponseItem]
+    let total_calories_kcal: Double
+}
+
 // MARK: - Food Detection Result
 struct FoodDetection {
     let name: String
@@ -24,6 +47,9 @@ struct FoodDetection {
     let boundingBox: CGRect
     let confidence: Double
     let estimatedVolume: Double?  // in cubic centimeters
+    let massGrams: Double?
+    let caloriesKcal: Double?
+    let nutritionError: String?
 }
 
 // MARK: - API Manager
@@ -52,6 +78,7 @@ class SegmentationAPIManager: ObservableObject {
             // Step 2: Process each detection and calculate volume
             print("🧮 [Processing] Step 2: Calculating volumes...")
             var newDetections: [FoodDetection] = []
+            var calorieRequestItems: [CalorieRequestItem] = []
            
             for i in 0..<response.masks.count {
                 print("   Processing detection \(i + 1)/\(response.masks.count): \(response.food_names[i])")
@@ -85,22 +112,67 @@ class SegmentationAPIManager: ObservableObject {
                
                 if let volume = volume {
                     print("   ✓ Calculated volume: \(String(format: "%.2f", volume)) cm³")
+                   
+                    // Add to calorie request
+                    calorieRequestItems.append(CalorieRequestItem(
+                        food_name: response.food_names[i],
+                        volume_cm3: volume
+                    ))
                 } else {
                     print("   ⚠️ Volume calculation failed")
                 }
                
+                // Create detection without calorie data initially
                 let detection = FoodDetection(
                     name: response.food_names[i],
                     mask: maskImage,
                     boundingBox: boundingBox,
                     confidence: response.confidences[i],
-                    estimatedVolume: volume
+                    estimatedVolume: volume,
+                    massGrams: nil,
+                    caloriesKcal: nil,
+                    nutritionError: nil
                 )
                
                 newDetections.append(detection)
             }
            
             print("✅ [Processing] Step 2 complete: Processed \(newDetections.count) detections")
+           
+            // Step 3: Calculate calories for items with volume
+            if !calorieRequestItems.isEmpty {
+                print("🍽️ [Processing] Step 3: Calculating calories...")
+                do {
+                    let calorieResponse = try await calculateCalories(items: calorieRequestItems)
+                   
+                    // Update detections with calorie information
+                    for (index, detection) in newDetections.enumerated() {
+                        if let volume = detection.estimatedVolume {
+                            // Find matching calorie response
+                            if let calorieItem = calorieResponse.items.first(where: {
+                                $0.food_name == detection.name && abs($0.volume_cm3 - volume) < 0.1
+                            }) {
+                                newDetections[index] = FoodDetection(
+                                    name: detection.name,
+                                    mask: detection.mask,
+                                    boundingBox: detection.boundingBox,
+                                    confidence: detection.confidence,
+                                    estimatedVolume: detection.estimatedVolume,
+                                    massGrams: calorieItem.mass_g,
+                                    caloriesKcal: calorieItem.calories_kcal,
+                                    nutritionError: calorieItem.error
+                                )
+                            }
+                        }
+                    }
+                   
+                    print("✅ [Processing] Step 3 complete: Total calories: \(String(format: "%.1f", calorieResponse.total_calories_kcal)) kcal")
+                } catch {
+                    print("⚠️ [Processing] Calorie calculation failed: \(error.localizedDescription)")
+                    // Continue with detections that don't have calorie info
+                }
+            }
+           
             print("🎉 [Processing] All done!\n")
            
             self.detections = newDetections
@@ -111,6 +183,88 @@ class SegmentationAPIManager: ObservableObject {
             print("❌ [Processing] Error details: \(error.localizedDescription)")
             self.errorMessage = "Error: \(error.localizedDescription)"
             self.isProcessing = false
+        }
+    }
+   
+    private func calculateCalories(items: [CalorieRequestItem]) async throws -> CalorieResponse {
+        print("🍽️ [API] Sending calorie calculation request...")
+       
+        guard let url = URL(string: "\(baseURL)/calculate_calories") else {
+            print("❌ [API] Invalid URL for calories endpoint")
+            throw URLError(.badURL)
+        }
+       
+        // Create request body
+        let calorieRequest = CalorieRequest(items: items)
+       
+        // Encode to JSON
+        let encoder = JSONEncoder()
+        guard let requestData = try? encoder.encode(calorieRequest) else {
+            print("❌ [API] Failed to encode calorie request")
+            throw NSError(domain: "EncodingError", code: -1, userInfo: nil)
+        }
+       
+        print("📦 [API] Request items: \(items.count)")
+        for item in items {
+            print("   - \(item.food_name): \(String(format: "%.2f", item.volume_cm3)) cm³")
+        }
+       
+        // Create HTTP request
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = requestData
+        request.timeoutInterval = 30.0
+       
+        print("📤 [API] Sending calorie request...")
+       
+        // Send request
+        let (data, response) = try await URLSession.shared.data(for: request)
+       
+        print("📥 [API] Received calorie response")
+       
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("❌ [API] Invalid response type")
+            throw URLError(.badServerResponse)
+        }
+       
+        print("📊 [API] Status code: \(httpResponse.statusCode)")
+       
+        // Print raw response for debugging
+        if let responseString = String(data: data, encoding: .utf8) {
+            print("📄 [API] Raw calorie response:")
+            print(responseString)
+        }
+       
+        guard httpResponse.statusCode == 200 else {
+            print("❌ [API] Bad status code: \(httpResponse.statusCode)")
+            if let errorString = String(data: data, encoding: .utf8) {
+                print("❌ [API] Error message: \(errorString)")
+            }
+            throw URLError(.badServerResponse)
+        }
+       
+        // Decode response
+        let decoder = JSONDecoder()
+        do {
+            let calorieResponse = try decoder.decode(CalorieResponse.self, from: data)
+           
+            print("✅ [API] Successfully decoded calorie response")
+            print("🍽️ [API] Calorie breakdown:")
+            for item in calorieResponse.items {
+                if let calories = item.calories_kcal, let mass = item.mass_g {
+                    print("   - \(item.food_name): \(String(format: "%.1f", mass))g, \(String(format: "%.1f", calories)) kcal")
+                } else if let error = item.error {
+                    print("   - \(item.food_name): ⚠️ \(error)")
+                }
+            }
+            print("🍽️ [API] Total: \(String(format: "%.1f", calorieResponse.total_calories_kcal)) kcal")
+           
+            return calorieResponse
+        } catch {
+            print("❌ [API] Calorie decoding error: \(error)")
+            print("❌ [API] Error details: \(error.localizedDescription)")
+            throw error
         }
     }
    
