@@ -70,13 +70,11 @@ class SegmentationAPIManager: ObservableObject {
         self.detections = []
        
         do {
-            // Step 1: Get segmentation masks from API
-            print("📡 [Processing] Step 1: Sending image to API...")
+            // get segmentation masks from API
             let response = try await sendImageToAPI(image: rgbImage)
-            print("✅ [Processing] Step 1 complete: Received \(response.masks.count) detections")
+            print("[Processing] Step 1 complete: Received \(response.masks.count) detections")
            
-            // Step 2: Process each detection and calculate volume
-            print("🧮 [Processing] Step 2: Calculating volumes...")
+            // process each detection and calculate volume
             var newDetections: [FoodDetection] = []
             var calorieRequestItems: [CalorieRequestItem] = []
            
@@ -86,11 +84,11 @@ class SegmentationAPIManager: ObservableObject {
                 // Decode mask from base64
                 guard let maskData = Data(base64Encoded: response.masks[i]),
                       let maskImage = UIImage(data: maskData) else {
-                    print("   ⚠️ Failed to decode mask for \(response.food_names[i])")
+                    print("Failed to decode mask for \(response.food_names[i])")
                     continue
                 }
                
-                print("   ✓ Decoded mask (\(maskImage.size.width)x\(maskImage.size.height))")
+                print("decoded mask (\(maskImage.size.width)x\(maskImage.size.height))")
                
                 // Create bounding box
                 let box = response.boxes[i]
@@ -101,7 +99,7 @@ class SegmentationAPIManager: ObservableObject {
                     height: box[3] - box[1]
                 )
                
-                print("   ✓ Bounding box: \(boundingBox)")
+                print("bounding box: \(boundingBox)")
                
                 // Calculate volume using depth map
                 let volume = calculateVolume(
@@ -111,7 +109,7 @@ class SegmentationAPIManager: ObservableObject {
                 )
                
                 if let volume = volume {
-                    print("   ✓ Calculated volume: \(String(format: "%.2f", volume)) cm³")
+                    print("calculated volume: \(String(format: "%.2f", volume)) cm³")
                    
                     // Add to calorie request
                     calorieRequestItems.append(CalorieRequestItem(
@@ -119,7 +117,7 @@ class SegmentationAPIManager: ObservableObject {
                         volume_cm3: volume
                     ))
                 } else {
-                    print("   ⚠️ Volume calculation failed")
+                    print("volume calculation failed")
                 }
                
                 // Create detection without calorie data initially
@@ -137,7 +135,7 @@ class SegmentationAPIManager: ObservableObject {
                 newDetections.append(detection)
             }
            
-            print("✅ [Processing] Step 2 complete: Processed \(newDetections.count) detections")
+            print("step 2 complete: Processed \(newDetections.count) detections")
            
             // Step 3: Calculate calories for items with volume
             if !calorieRequestItems.isEmpty {
@@ -166,31 +164,29 @@ class SegmentationAPIManager: ObservableObject {
                         }
                     }
                    
-                    print("✅ [Processing] Step 3 complete: Total calories: \(String(format: "%.1f", calorieResponse.total_calories_kcal)) kcal")
+                    print("Total calories: \(String(format: "%.1f", calorieResponse.total_calories_kcal)) kcal")
                 } catch {
-                    print("⚠️ [Processing] Calorie calculation failed: \(error.localizedDescription)")
+                    print("Calorie calculation failed: \(error.localizedDescription)")
                     // Continue with detections that don't have calorie info
                 }
             }
-           
-            print("🎉 [Processing] All done!\n")
            
             self.detections = newDetections
             self.isProcessing = false
            
         } catch {
-            print("❌ [Processing] Error occurred: \(error)")
-            print("❌ [Processing] Error details: \(error.localizedDescription)")
+            print("Error occurred: \(error)")
+            print("Error details: \(error.localizedDescription)")
             self.errorMessage = "Error: \(error.localizedDescription)"
             self.isProcessing = false
         }
     }
    
     private func calculateCalories(items: [CalorieRequestItem]) async throws -> CalorieResponse {
-        print("🍽️ [API] Sending calorie calculation request...")
+        print("sending calorie calculation request...")
        
         guard let url = URL(string: "\(baseURL)/calculate_calories") else {
-            print("❌ [API] Invalid URL for calories endpoint")
+            print("invalid URL for calories endpoint")
             throw URLError(.badURL)
         }
        
@@ -200,11 +196,11 @@ class SegmentationAPIManager: ObservableObject {
         // Encode to JSON
         let encoder = JSONEncoder()
         guard let requestData = try? encoder.encode(calorieRequest) else {
-            print("❌ [API] Failed to encode calorie request")
+            print("failed to encode calorie request")
             throw NSError(domain: "EncodingError", code: -1, userInfo: nil)
         }
        
-        print("📦 [API] Request items: \(items.count)")
+        print("request items: \(items.count)")
         for item in items {
             print("   - \(item.food_name): \(String(format: "%.2f", item.volume_cm3)) cm³")
         }
@@ -221,25 +217,25 @@ class SegmentationAPIManager: ObservableObject {
         // Send request
         let (data, response) = try await URLSession.shared.data(for: request)
        
-        print("📥 [API] Received calorie response")
+        print("received calorie response")
        
         guard let httpResponse = response as? HTTPURLResponse else {
-            print("❌ [API] Invalid response type")
+            print("Invalid response type")
             throw URLError(.badServerResponse)
         }
        
-        print("📊 [API] Status code: \(httpResponse.statusCode)")
+        print("Status code: \(httpResponse.statusCode)")
        
         // Print raw response for debugging
         if let responseString = String(data: data, encoding: .utf8) {
-            print("📄 [API] Raw calorie response:")
+            print("Raw calorie response:")
             print(responseString)
         }
        
         guard httpResponse.statusCode == 200 else {
-            print("❌ [API] Bad status code: \(httpResponse.statusCode)")
+            print("[API] Bad status code: \(httpResponse.statusCode)")
             if let errorString = String(data: data, encoding: .utf8) {
-                print("❌ [API] Error message: \(errorString)")
+                print("[API] Error message: \(errorString)")
             }
             throw URLError(.badServerResponse)
         }
@@ -249,41 +245,41 @@ class SegmentationAPIManager: ObservableObject {
         do {
             let calorieResponse = try decoder.decode(CalorieResponse.self, from: data)
            
-            print("✅ [API] Successfully decoded calorie response")
-            print("🍽️ [API] Calorie breakdown:")
+            print("Successfully decoded calorie response")
+            print("calorie breakdown:")
             for item in calorieResponse.items {
                 if let calories = item.calories_kcal, let mass = item.mass_g {
                     print("   - \(item.food_name): \(String(format: "%.1f", mass))g, \(String(format: "%.1f", calories)) kcal")
                 } else if let error = item.error {
-                    print("   - \(item.food_name): ⚠️ \(error)")
+                    print("   - \(item.food_name):  \(error)")
                 }
             }
             print("🍽️ [API] Total: \(String(format: "%.1f", calorieResponse.total_calories_kcal)) kcal")
            
             return calorieResponse
         } catch {
-            print("❌ [API] Calorie decoding error: \(error)")
-            print("❌ [API] Error details: \(error.localizedDescription)")
+            print("[API] Calorie decoding error: \(error)")
+            print("Error details: \(error.localizedDescription)")
             throw error
         }
     }
    
     private func sendImageToAPI(image: UIImage) async throws -> SegmentationResponse {
-        print("🌐 [API] Sending request to: \(baseURL)/segment")
+        print("sending request to: \(baseURL)/segment")
        
         guard let url = URL(string: "\(baseURL)/segment") else {
-            print("❌ [API] Invalid URL: \(baseURL)")
+            print("ivalid URL: \(baseURL)")
             throw URLError(.badURL)
         }
        
         // Convert image to JPEG data
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            print("❌ [API] Failed to convert image to JPEG")
+            print("ailed to convert image to JPEG")
             throw NSError(domain: "ImageConversion", code: -1, userInfo: nil)
         }
        
-        print("📷 [API] Image size: \(image.size)")
-        print("📦 [API] Image data size: \(imageData.count / 1024) KB")
+        print("image size: \(image.size)")
+        print("image data size: \(imageData.count / 1024) KB")
        
         // Create multipart form data
         var request = URLRequest(url: url)
@@ -313,22 +309,22 @@ class SegmentationAPIManager: ObservableObject {
         print("📥 [API] Received response")
        
         guard let httpResponse = response as? HTTPURLResponse else {
-            print("❌ [API] Invalid response type")
+            print("[API] Invalid response type")
             throw URLError(.badServerResponse)
         }
        
-        print("📊 [API] Status code: \(httpResponse.statusCode)")
+        print("[API] Status code: \(httpResponse.statusCode)")
        
         // Print raw response for debugging
         if let responseString = String(data: data, encoding: .utf8) {
-            print("📄 [API] Raw response:")
+            print("[API] Raw response:")
             print(responseString)
         }
        
         guard httpResponse.statusCode == 200 else {
-            print("❌ [API] Bad status code: \(httpResponse.statusCode)")
+            print("bad status code: \(httpResponse.statusCode)")
             if let errorString = String(data: data, encoding: .utf8) {
-                print("❌ [API] Error message: \(errorString)")
+                print("error message: \(errorString)")
             }
             throw URLError(.badServerResponse)
         }
@@ -339,8 +335,8 @@ class SegmentationAPIManager: ObservableObject {
             let decodedResponse = try decoder.decode(SegmentationResponse.self, from: data)
            
             // Print decoded response details
-            print("✅ [API] Successfully decoded response")
-            print("🍽️ [API] Found \(decodedResponse.masks.count) food items:")
+            print("[API] Successfully decoded response")
+            print(" [API] Found \(decodedResponse.masks.count) food items:")
             for (index, name) in decodedResponse.food_names.enumerated() {
                 print("   \(index + 1). \(name) (confidence: \(String(format: "%.2f", decodedResponse.confidences[index] * 100))%)")
                 print("      Box: \(decodedResponse.boxes[index])")
@@ -349,8 +345,8 @@ class SegmentationAPIManager: ObservableObject {
            
             return decodedResponse
         } catch {
-            print("❌ [API] Decoding error: \(error)")
-            print("❌ [API] Decoding error details: \(error.localizedDescription)")
+            print("[API] Decoding error: \(error)")
+            print("API] Decoding error details: \(error.localizedDescription)")
             throw error
         }
     }
